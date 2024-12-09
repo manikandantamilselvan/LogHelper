@@ -8,16 +8,21 @@ import Foundation
 
 class LogsHelper: NSObject {
     
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        return formatter
+    }()
     
-    class func info(_ message:Any,event: LogType = .d ,fileName: String = #file,line: Int = #line,column: Int = #column,funcName: String = #function) {
+    class func info(_ message: Any, event: LogType = .d, fileName: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         #if DEBUG
-        print("\(Date())[\(event.rawValue)][\(self.sourceFileName(filePath: fileName))]:\(line) \(column) \(funcName) -> \(message)")
+        print("\(formattedDate()) [\(event.rawValue)] [\(sourceFileName(filePath: fileName)):\(line) \(funcName)] -> \(message)")
         #endif
     }
     
     class func printLogs(_ items: Any..., type: LogType = .d, fileName: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         #if DEBUG
-        print("---[\(Date()):-  [\(type.rawValue)] [\(self.sourceFileName(filePath: fileName))]:\(line) \(column) \(funcName)]---")
+        print("---[\(formattedDate())] [\(type.rawValue)] [\(sourceFileName(filePath: fileName)):\(line) \(funcName)]---")
         for item in items {
             print(item)
         }
@@ -25,9 +30,12 @@ class LogsHelper: NSObject {
         #endif
     }
     
+    private class func formattedDate() -> String {
+        return dateFormatter.string(from: Date())
+    }
+    
     private class func sourceFileName(filePath: String) -> String {
-        let components = filePath.components(separatedBy: "/")
-        return components.isEmpty ? "" : components.last!
+        return (filePath as NSString).lastPathComponent
     }
 }
 
