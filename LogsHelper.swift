@@ -1,14 +1,12 @@
 //
 //  LogsHelper.swift
-//  NNNOW
 //
-//  Created by Manikandan T on 13/09/22.
-//  Copyright © 2022 Arvind. All rights reserved.
+//  Created by Manikandan T.
 //
 
 import Foundation
 
-class NNNOWPrintLogs: NSObject {
+class LogsHelper: NSObject {
     
     
     class func info(_ message:Any,event: LogType = .d ,fileName: String = #file,line: Int = #line,column: Int = #column,funcName: String = #function) {
@@ -17,7 +15,7 @@ class NNNOWPrintLogs: NSObject {
         #endif
     }
     
-    class func nnnowPrint(_ items: Any..., type: LogType = .d, fileName: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    class func printLogs(_ items: Any..., type: LogType = .d, fileName: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         #if DEBUG
         print("---[\(Date()):-  [\(type.rawValue)] [\(self.sourceFileName(filePath: fileName))]:\(line) \(column) \(funcName)]---")
         for item in items {
